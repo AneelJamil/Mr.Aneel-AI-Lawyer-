@@ -1,4 +1,5 @@
 pyttsx3
+speechrecognition
 streamlit
 spacy>=3.4.0
 requests
