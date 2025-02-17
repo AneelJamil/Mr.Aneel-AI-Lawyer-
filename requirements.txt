@@ -1,5 +1,5 @@
 streamlit
-spacy
+spacy>=3.4.0
 pyttsx3
 SpeechRecognition
 requests
@@ -7,3 +7,6 @@ beautifulsoup4
 pandas
 fpdf
 PyPDF2
+
+# Add the spaCy model link:
+en-core-web-sm @ https://github.com/explosion/spacy-models/releases/download/en_core_web_sm-3.4.0/en_core_web_sm-3.4.0.tar.gz
