@@ -2,6 +2,7 @@ import streamlit as st
 import sqlite3
 import json
 import spacy
+from spacy.cli import download
 import pyttsx3
 import speech_recognition as sr
 import tempfile
@@ -14,6 +15,7 @@ import pandas as pd
 from fpdf import FPDF
 import io
 import PyPDF2
+
 
 ################################################################################
 # DISCLAIMER: This code is for demonstration purposes only and does not provide
@@ -85,10 +87,13 @@ with col2:
 #####################
 # NLP, TTS, & SPEECH SETUP
 #####################
-nlp = spacy.load("en_core_web_sm")
-engine = pyttsx3.init()
-r = sr.Recognizer()
-
+# Ensure the model is available
+try:
+    nlp = spacy.load("en_core_web_sm")
+except OSError:
+    print("Downloading 'en_core_web_sm' model...")
+    download("en_core_web_sm")
+    nlp = spacy.load("en_core_web_sm")
 #####################
 # DATABASE SETUP (SQLite for Users & Query History)
 #####################
