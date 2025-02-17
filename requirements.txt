@@ -1,0 +1,9 @@
+streamlit
+spacy
+pyttsx3
+SpeechRecognition
+requests
+beautifulsoup4
+pandas
+fpdf
+PyPDF2
