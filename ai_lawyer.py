@@ -83,7 +83,7 @@ with col2:
 #####################
 # NLP, TTS, & SPEECH SETUP
 #####################
-nlp = spacy.load("en_core_web_sm")
+nlp = spacy.load("en-core-web-sm @ https://github.com/explosion/spacy-models/releases/download/en_core_web_sm-3.4.0/en_core_web_sm-3.4.0.tar.gz")
 engine = pyttsx3.init()
 r = sr.Recognizer()
 
