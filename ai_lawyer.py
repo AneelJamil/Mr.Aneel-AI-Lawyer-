@@ -74,7 +74,7 @@ h1, h2, h3, h4 {
 col1, col2 = st.columns([1, 3])
 with col1:
     # Replace with your simpler path (file physically named "logo.webp")
-    st.image("D:\AI lawyer\DALL·E 2025-02-14 02.55.41 - A professional and minimalistic logo for a legal research AI application. The design should feature a stylized balance scale, symbolizing justice, int.webp", width=120)
+    st.image("logo.webp", width=120)
 
 with col2:
     st.markdown("<h1 style='margin-bottom:0'>Legal AI Advisor</h1>", unsafe_allow_html=True)
@@ -535,7 +535,7 @@ def generate_pdf(report_text):
 # SIDEBAR & MAIN TABS
 #####################
 with st.sidebar:
-    st.image("D:\AI lawyer\DALL·E 2025-02-14 02.55.41 - A professional and minimalistic logo for a legal research AI application. The design should feature a stylized balance scale, symbolizing justice, int.webp", width=120)
+    st.image("logo.webp", width=120)
     st.session_state.country = st.selectbox("🌍 Select Jurisdiction", COUNTRIES, index=0)
     if st.button("🔍 New Research Case"):
         st.success("New research case initiated!")
