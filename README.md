@@ -1,1 +1,1 @@
-# Mr.Aneel-AI-Lawyer-
+# AI-Lawyer-
