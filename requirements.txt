@@ -1,3 +1,4 @@
+pyttsx3
 streamlit
 spacy>=3.4.0
 requests
