@@ -24,9 +24,12 @@ import PyPDF2
 # Global Constants
 #####################
 COUNTRIES = ["USA", "UK", "Pakistan", "Canada", "India", "International"]
+DB_NAME = "legal_ai_users.db"
+DATA_DIR = Path("data")
+DATA_DIR.mkdir(exist_ok=True)
 
 #####################
-# SETUP PAGE & CUSTOM CSS
+# STREAMLIT PAGE SETUP & CUSTOM CSS
 #####################
 st.set_page_config(page_title="Legal AI Advisor", layout="wide")
 st.markdown("""
@@ -73,9 +76,8 @@ h1, h2, h3, h4 {
 #####################
 col1, col2 = st.columns([1, 3])
 with col1:
-    # Replace with your simpler path (file physically named "logo.webp")
+    # Using a relative path for the logo image. Place "logo.webp" in your project folder.
     st.image("logo.webp", width=120)
-
 with col2:
     st.markdown("<h1 style='margin-bottom:0'>Legal AI Advisor</h1>", unsafe_allow_html=True)
     st.markdown("<p style='margin-top:0; color:#f0c929'>Your one‑stop hub for legal insights and analysis</p>", unsafe_allow_html=True)
@@ -83,20 +85,13 @@ with col2:
 #####################
 # NLP, TTS, & SPEECH SETUP
 #####################
-import spacy
-import pyttsx3
-import speech_recognition as sr
-
 nlp = spacy.load("en_core_web_sm")
 engine = pyttsx3.init()
 r = sr.Recognizer()
 
-
 #####################
 # DATABASE SETUP (SQLite for Users & Query History)
 #####################
-DB_NAME = "legal_ai_users.db"
-
 def init_db():
     conn = sqlite3.connect(DB_NAME)
     c = conn.cursor()
@@ -317,25 +312,19 @@ ALL_LAWS = {
 #####################
 # LOCAL LAWS DATABASE (Simulated)
 #####################
-DATA_DIR = Path("data")
-DATA_DIR.mkdir(exist_ok=True)
 for country in COUNTRIES:
     file_path = DATA_DIR / f"laws_{country.lower()}.json"
     if not file_path.exists():
         sample_laws = [
             {
                 "title": "Sample Legal Law",
-                "text": (
-                    "This sample legal law grants individuals rights in accordance with constitutional protections."
-                ),
+                "text": "This sample legal law grants individuals rights in accordance with constitutional protections.",
                 "type": "Legal",
                 "enforcement_agency": "Sample Agency"
             },
             {
                 "title": "Sample Illegal Act",
-                "text": (
-                    "This sample illegal act is prohibited unless an exemption is granted by authority."
-                ),
+                "text": "This sample illegal act is prohibited unless an exemption is granted by authority.",
                 "type": "Illegal",
                 "enforcement_agency": "Law Enforcement"
             }
@@ -350,14 +339,14 @@ class LegalKnowledgeBase:
     def __init__(self, country):
         self.country = country
         self.laws = self._load_laws()
-    
+
     def _load_laws(self):
         try:
             with open(DATA_DIR / f"laws_{self.country.lower()}.json") as f:
                 return json.load(f)
         except FileNotFoundError:
             return []
-    
+
     def get_relevant_laws(self, keywords):
         return [law for law in self.laws if any(kw.lower() in law["text"].lower() for kw in keywords)]
 
@@ -443,7 +432,7 @@ def find_potential_loopholes(text, window=30):
 class LegalAdvisor:
     def __init__(self, country):
         self.kb = LegalKnowledgeBase(country)
-    
+
     def analyze(self, text):
         doc = nlp(text)
         keywords = [token.lemma_ for token in doc if token.pos_ in ["NOUN", "VERB"]]
@@ -513,13 +502,12 @@ class TaxOptimizer:
         self.income = income
         self.expenses = expenses
         self.deductions = deductions
-    
+
     def calculate(self):
         taxable = self.income - self.deductions
-        # Adjusted 'charity' logic so it doesn't exceed 500
         allocations = {
             "retirement": min(6000, self.income * 0.1),
-            "charity": min(500, self.income * 0.1) 
+            "charity": min(500, self.income * 0.1)
         }
         return max(0, taxable), allocations
 
@@ -675,7 +663,6 @@ with tabs[1]:
                             st.write("---")
                 else:
                     st.warning("No relevant laws found.")
-
                 st.subheader("Additional Web Research")
                 if web_results:
                     for i, item in enumerate(web_results, start=1):
