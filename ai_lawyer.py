@@ -83,9 +83,14 @@ with col2:
 #####################
 # NLP, TTS, & SPEECH SETUP
 #####################
-nlp = spacy.load("en-core-web-sm @ https://github.com/explosion/spacy-models/releases/download/en_core_web_sm-3.4.0/en_core_web_sm-3.4.0.tar.gz")
+import spacy
+import pyttsx3
+import speech_recognition as sr
+
+nlp = spacy.load("en_core_web_sm")
 engine = pyttsx3.init()
 r = sr.Recognizer()
+
 
 #####################
 # DATABASE SETUP (SQLite for Users & Query History)
